@@ -1,0 +1,69 @@
+protocol Animal {
+    func run()
+}
+class Lion: Animal {
+
+    func run() {
+        print("🦁  corriendo")
+    }
+}
+class Dog: Animal {
+    
+    func run() {
+        print("🐶  corriendo")
+    }
+}
+class Cat: Animal {
+
+    func run() {
+        print("😼  corriendo")
+    }
+}
+protocol Animal {
+    func run()
+    func speak()
+}
+class Lion: Animal {
+
+    ...
+
+    func speak() {
+        print("Roarrrr 🦁")
+    }
+}
+class Dog: Animal {
+
+    ...
+
+    func speak() {
+        print("Guau! 🐶")
+    }
+}
+class Cat: Animal {
+
+    ...
+
+    func speak() {
+        print("Miau 😼")
+    }
+    protocol Animal {
+
+    func run()
+    func speak()
+    func swim()
+}
+lass Salmon: Animal {
+
+    func run() { 
+        fatalError("Salmons can NOT run") 
+    }
+
+    func speak() { 
+        fatalError("Salmons can NOT speak") 
+    }
+
+    func swim() { 
+        print("Swiming... 🐟  ")
+   }
+}
+}
