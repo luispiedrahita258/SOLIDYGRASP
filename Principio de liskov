@@ -1,0 +1,68 @@
+public class Bird {
+ 
+    public String eat(){
+        return food.name;
+    }
+ 
+    public String tweet(){
+        return tweet.sound;
+    }
+ 
+    public void fly(){
+        // flying functionality
+    }
+ 
+}
+public class Duck extends Bird {
+ 
+    @Override
+    public String eat(){
+        return “Fish”;
+    }
+ 
+    @Override
+    public String tweet(){
+        return “Quack”;
+    }
+ 
+}
+ 
+ 
+public class Sparrow extends Bird {
+ 
+    @Override
+    public String eat(){
+        return “Insect”;
+    }
+ 
+    @Override
+    public String tweet(){
+        return “Chirp”;
+    }
+ 
+}
+public class Penguin extends Bird {
+ 
+    @Override
+    public String eat(){
+        return “Fish”;
+    }
+ 
+    @Override
+    public String tweet(){
+        return “Squawk”;
+    }
+ 
+    @Override
+    public void fly(){
+        throw new Exception(“Penguins can’t fly”);
+    }
+ 
+}
+public void startFlying(Bird bird){
+    if(Penguin.class.isInstance(bird)){
+        // can’t fly 
+    }else{
+        bird.fly();
+    }
+}
