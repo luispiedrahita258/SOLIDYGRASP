@@ -1,0 +1,61 @@
+class Shopping { ... }
+
+class ShoppingBasket {
+    fun buy(shopping: Shopping?) {
+        val db = SqlDatabase()
+        db.save(shopping)
+        val creditCard = CreditCard()
+        creditCard.pay(shopping)
+    }
+}
+
+class SqlDatabase {
+    fun save(shopping: Shopping?) {
+        // Saves data in SQL database
+    }
+}
+
+class CreditCard {
+    fun pay(shopping: Shopping?) {
+        // Performs payment using a credit card
+    }
+}
+interface Persistence {
+    fun save(shopping: Shopping?)
+}
+
+class SqlDatabase : Persistence {
+    override fun save(shopping: Shopping?) {
+        // Saves data in SQL database
+    }
+}
+
+interface PaymentMethod {
+    fun pay(shopping: Shopping?)
+}
+
+class CreditCard : PaymentMethod {
+    override fun pay(shopping: Shopping?) {
+        // Performs payment using a credit card
+    }
+}
+class ShoppingBasket(
+    private val persistence: Persistence,
+    private val paymentMethod: PaymentMethod
+) {
+    fun buy(shopping: Shopping?) {
+        persistence.save(shopping)
+        paymentMethod.pay(shopping)
+    }
+}
+class Server : Persistence {
+    override fun save(shopping: Shopping?) {
+        // Saves data in a server
+    }
+}
+
+class Paypal : PaymentMethod {
+    override fun pay(shopping: Shopping?) {
+        // Performs payment using Paypal account
+    }
+}
