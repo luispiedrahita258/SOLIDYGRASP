@@ -13,3 +13,68 @@ public class Cliente
       public decimal Saldo { get; set; }
 }
 El problema a resolver es diseñas y escribir una(s) Clase(s) para Filtrar una lista de clientes por una serie de características como: localidad, nombre y deudores.
+
+public class FiltroClientes
+{
+    public IEnumerable<Cliente> FiltroPorLocalidad(
+                                IList<Cliente> clientes, Localidades localidad)
+    {
+        // esto es una expresion Lambda
+        // Mas info en: http://msdn.microsoft.com/es-es/library/bb534803.aspx
+        return clientes.Where(c => c.Localidad == localidad);
+    }
+}
+Como podemos ver, el objeto "filtrador por localidades" recibe como parámetros la lista de clientes, y la localidad por la cual filtrarlos y devuelve la lista de clientes que pertenecen a dicha localidad.
+public class FiltroClientes
+ {
+    public IEnumerable<Cliente> FiltroPorLocalidad(
+                                IList<Cliente> clientes, Localidades localidad)
+    {
+        return clientes.Where(c => c.Localidad == localidad);
+    }
+ 
+  public IEnumerable<Cliente> FiltroPorLocalidad(IList<Cliente> clientes, string nombre)
+     {
+         return clientes.Where(c => c.Nombre == nombre);
+     }
+ 
+     public IEnumerable<Cliente> FiltroPorLocalidad(IList<Cliente> clientes)
+     {
+         return clientes.Where(c => c.Saldo < 0);
+     }
+}
+Una solución es crear las especificaciones de los filtros en clases separadas, y en cada una de ellas implementar la forma de filtrar la información (recuerda el principio SRP).
+public abstract class EspecificacionFiltroCliente
+{
+     public IEnumerable<Cliente> Filtrar (IList<Cliente> clientes)
+     {
+         return AplicarFiltro(clientes);
+     }
+ 
+     protected abstract IEnumerable<Cliente> AplicarFiltro(IList<Cliente> clientes);
+}
+el primero público que es sencillamente la acción filtrar y que es la que utilizará nuestro [FiltroClientes]. 
+public class FiltroLocalidad : EspecificacionFiltroCliente
+{
+    private Localidades localidad;
+ 
+    public FiltroLocalidad(Localidades localidad)
+    {
+        this.Localidad = localidad;
+    }
+ 
+    protected override IEnumerable<Cliente> AplicarFiltro(IList<Cliente> clientes)
+    {
+        return clientes.Where(c => c.localidad == this.localidad);
+    }
+}
+public class FiltroClientes
+{
+    public IEnumerable<Cliente> FiltrarPor( 
+                                IList<Cliente> clientes,
+                                EspecificacionFiltroCliente filtro)
+    {
+        return filtro.Filtrar(clientes);
+    }
+}
+Evidentemente, también vamos a reescribir la clase [FiltroClientes]
